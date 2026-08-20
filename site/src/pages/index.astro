@@ -135,6 +135,23 @@ import '../styles/global.css';
       </div>
     </section>
 
+    <!-- ============ recent, curated ============ -->
+    <section id="recent" aria-label="Recent deaths">
+      <div class="section">
+        <p class="kicker">Too recent for the federal data</p>
+        <h2>The registry doesn't wait eighteen months</h2>
+        <p class="lede">
+          Federal crash data lags a year or more. The deaths below are curated by hand from
+          published news reports — named, cited, and updated as the legal process moves. Our
+          rules for what gets published, and how to request a correction, are in the
+          open:&#32;<a href="https://github.com/f-mac/lastrideregistry/blob/main/EDITORIAL.md">EDITORIAL.md</a>.
+        </p>
+        <div id="recent-cases"></div>
+      </div>
+    </section>
+
+    <hr class="rule" />
+
     <!-- ============ the pattern ============ -->
     <section id="pattern" aria-label="The pattern">
       <div class="section">
@@ -259,6 +276,7 @@ import '../styles/global.css';
       import '../scripts/landing.js';
       import '../scripts/registry-map.js';
       import '../scripts/charts.js';
+      import '../scripts/recent.js';
     </script>
   </body>
 </html>

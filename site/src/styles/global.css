@@ -294,6 +294,27 @@ a:hover { text-decoration-color: var(--amber); }
   font-family: var(--mono); font-size: 0.8rem; flex-wrap: wrap; }
 .file-row .size { color: var(--ink-3-solid); font-size: 0.7rem; }
 
+/* ---------- recent curated cases ---------- */
+#recent-cases { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr));
+  gap: 1.25rem; margin-top: 3rem; }
+.case-card { border: 1px solid var(--line); background: var(--surface); padding: 1.6rem 1.7rem; }
+.case-when { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--ink-2); }
+.case-names { font-size: 1.55rem; font-weight: 500; margin: 0.5rem 0 0.8rem; color: var(--bone); }
+.case-summary { color: var(--bone-dim); font-size: 1.02rem; }
+.case-flags { margin-top: 0.8rem; display: flex; gap: 0.7rem; flex-wrap: wrap; }
+.case-flag { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--red); }
+.case-unconfirmed { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--ink-2); border: 1px solid var(--line);
+  padding: 0.15rem 0.5rem; }
+.case-status { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.06em;
+  margin-top: 1.1rem; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--bone-dim); }
+.case-status.amber { color: var(--amber); }
+.case-status .case-asof { color: var(--ink-3-solid); font-size: 0.68rem; display: block; margin-top: 0.2rem; }
+.case-sources { font-family: var(--mono); font-size: 0.7rem; margin-top: 0.8rem; }
+.case-sources a { color: var(--ink-2); }
+
 .roadmap { border-left: 2px solid var(--line); padding-left: 1.6rem; margin-top: 2.5rem; }
 .roadmap .step { margin-bottom: 2rem; position: relative; }
 .roadmap .step::before { content: ''; position: absolute; left: calc(-1.6rem - 6px);

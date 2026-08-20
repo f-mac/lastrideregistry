@@ -1,0 +1,39 @@
+# Curated case — see /EDITORIAL.md for publishing rules.
+id: 2026-07-16-burlington-vt
+victims:
+  - name: Shiloh Skalka
+    age: 16
+date: 2026-07-16
+location:
+  city: Burlington
+  state: VT
+  lat: 44.4633
+  lon: -73.2103
+summary: >-
+  Shiloh was riding her e-bike south on Pine Street, wearing a helmet, when a
+  driver traveling the same direction struck her near Locust Street. She died
+  that evening at the University of Vermont Medical Center. A rising junior at
+  Burlington High School, she was honored weeks later by hundreds of riders
+  moving through the city in her memory.
+details_confirmed: true
+hit_and_run: false
+driver_status: cited
+charges: "negligent operation with death resulting; court appearance scheduled Aug 27, 2026"
+driver_status_asof: 2026-07-31
+sources:
+  - outlet: Burlington Police Department
+    title: "Motor Vehicle Crash - Fatality | 26BU016028 (update)"
+    url: https://www.burlingtonvt.gov/m/newsflash/home/detail/3854
+    date: 2026-07-17
+  - outlet: Burlington PD (citation update)
+    title: "Citation and court date update, incident 26BU016028"
+    url: https://www.burlingtonvt.gov/m/newsflash/home/detail/3868
+    date: 2026-07-31
+  - outlet: WCAX
+    title: "'I'm completely shattered': Dad mourns teen killed in Burlington e-bike crash"
+    url: https://www.wcax.com/2026/08/03/im-completely-shattered-dad-mourns-teen-killed-burlington-e-bike-crash/
+    date: 2026-08-03
+  - outlet: WCAX
+    title: "Hundreds ride bikes through Burlington to honor teen killed in crash"
+    url: https://www.wcax.com/2026/08/12/bike-ride-held-burlington-honor-teen-killed-crash/
+    date: 2026-08-12

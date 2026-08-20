@@ -1,0 +1,39 @@
+# Curated case — see /EDITORIAL.md for publishing rules.
+id: 2026-08-19-carter-county-tn
+victims:
+  - name: Haylan Engdahl
+  - name: Brayden Rogers
+date: 2026-08-19
+location:
+  city: Hampton, Carter County
+  state: TN
+  lat: 36.229
+  lon: -82.188
+summary: >-
+  Eleven members of the Milligan University cycling team were on a morning
+  training ride on US Highway 19E near Simerly Creek Road when a driver struck
+  the group. Haylan and Brayden, both sophomores, were killed; seven teammates
+  were taken to Johnson City Medical Center, four in critical condition. The
+  driver was arrested the same day.
+details_confirmed: false
+hit_and_run: false
+driver_status: charged
+charges: "two counts of vehicular homicide by recklessness, five counts of aggravated assault by vehicle; investigation ongoing"
+driver_status_asof: 2026-08-20
+sources:
+  - outlet: WVLT
+    title: "North Carolina man charged after deadly crash with East Tennessee university's cycling group: DA"
+    url: https://www.wvlt.tv/2026/08/19/2-dead-after-crash-involving-car-group-bicyclists-east-tennessee-troopers-say/
+    date: 2026-08-19
+  - outlet: CBS News
+    title: "2 members of Tennessee college cycling team killed in highway collision, officials say"
+    url: https://www.cbsnews.com/news/tennessee-milligan-university-cycling-team-fatalities-highway-crash/
+    date: 2026-08-19
+  - outlet: Associated Press (via Boston.com)
+    title: "2 college cyclists killed and 7 injured in Tennessee car crash"
+    url: https://www.boston.com/news/national-news/2026/08/20/2-college-cyclists-killed-and-7-injured-in-tennessee-car-crash/
+    date: 2026-08-20
+  - outlet: WCYB
+    title: "2 Milligan cyclists killed, multiple others injured in crash; man charged"
+    url: https://wcyb.com/news/local/carter-county-authorities-respond-to-crash-involving-vehicle-and-multiple-bicycles
+    date: 2026-08-19
