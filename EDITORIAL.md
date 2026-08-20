@@ -43,6 +43,8 @@ Applies to all site copy, not just case pages. Write like a careful local
 reporter, not a landing page.
 
 - Plain declarative sentences. Numbers carry the weight; adjectives don't.
+- No personification or poetic inversion ("roads hold these lights",
+  "the map remembers"). Objects don't act; people and agencies do.
 - No mirrored-antithesis tics ("what is known — and what is not yet known").
 - No self-congratulation ("That's the point.", "You are looking at it.").
 - No invented specificity: details appear only when they're in the record.
