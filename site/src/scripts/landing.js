@@ -37,14 +37,12 @@ async function init() {
     })
     .filter(Boolean)
     .sort((a, b) => a.year - b.year || a.doy - b.doy);
-  pts.forEach((p, i) => (p.t = i / (pts.length - 1)));
+  const denom = Math.max(1, pts.length - 1);
+  pts.forEach((p, i) => (p.t = i / denom));
 
   const first = pts[0]; // 2010-01-02, Worcester County MD
   const yearStarts = {};
   pts.forEach((p) => { if (!(p.year in yearStarts)) yearStarts[p.year] = p.t; });
-
-  // pre-render state outlines once per resize
-  const mapLayer = document.createElement('canvas');
 
   let dpr = 1, vw = 0, vh = 0, fit = { s: 1, tx: 0, ty: 0 };
   function resize() {
@@ -53,20 +51,14 @@ async function init() {
     vh = innerHeight;
     canvas.width = vw * dpr;
     canvas.height = vh * dpr;
-    const s = Math.min((vw * 0.92) / W, (vh * 0.82) / H);
-    fit = { s, tx: (vw - W * s) / 2, ty: (vh - H * s) / 2 + vh * 0.02 };
-    mapLayer.width = canvas.width;
-    mapLayer.height = canvas.height;
-    const m = mapLayer.getContext('2d');
-    m.setTransform(dpr, 0, 0, dpr, 0, 0);
-    m.translate(fit.tx, fit.ty);
-    m.scale(fit.s, fit.s);
-    m.strokeStyle = '#20242d';
-    m.lineWidth = 0.7 / fit.s;
-    m.beginPath();
-    const path = pathFrom(m);
-    states.features.forEach((f) => path(f.geometry));
-    m.stroke();
+    const mobile = vw < 640;
+    // on phones the scene card is a bottom sheet, so the map lives in the
+    // top ~55% of the viewport instead of centered
+    const s = mobile
+      ? Math.min((vw * 0.94) / W, (vh * 0.5) / H)
+      : Math.min((vw * 0.92) / W, (vh * 0.82) / H);
+    const ty = mobile ? vh * 0.06 : (vh - H * s) / 2 + vh * 0.02;
+    fit = { s, tx: (vw - W * s) / 2, ty };
     dirty = true;
   }
 
@@ -108,9 +100,15 @@ async function init() {
   let M = null;
 
   let scrollP = 0, dirty = true;
+  const cue = document.querySelector('#hero .scroll-cue');
   function onScroll() {
     const total = exp.offsetHeight - vh;
     scrollP = Math.min(1, Math.max(0, (scrollY - exp.offsetTop) / total));
+    if (cue) {
+      // the keyframe animation owns opacity, so it must be disabled to fade
+      if (scrollY > 40) { cue.style.animation = 'none'; cue.style.opacity = '0'; }
+      else { cue.style.animation = ''; cue.style.opacity = ''; }
+    }
     dirty = true;
   }
 
@@ -141,8 +139,8 @@ async function init() {
     const Z0 = 7;
     const z = Math.pow(Z0, 1 - zoomOut);
     // where the first point sits at national zoom (z=1)
-    const natX = (first.x - W / 2) * fit.s + vw / 2;
-    const natY = (first.y - H / 2) * fit.s + vh / 2;
+    const natX = fit.tx + first.x * fit.s;
+    const natY = fit.ty + first.y * fit.s;
     // its screen position now: start centered slightly above the card
     const pX = vw / 2 + (natX - vw / 2) * zoomOut;
     const pY = vh * 0.42 + (natY - vh * 0.42) * zoomOut;
@@ -164,7 +162,11 @@ async function init() {
     ctx.stroke();
     ctx.globalAlpha = 1;
 
-    const fledMix = smooth(ease(M.toll + (M.fled - M.toll) * 0.25, M.fled, p));
+    // red burns in for the drivers scene, then recedes at the handoff so the
+    // bone field returns with red as the honest minority
+    const fledIn = smooth(ease(M.toll + (M.fled - M.toll) * 0.25, M.fled, p));
+    const fledOut = smooth(ease(M.fled + 0.03, M.fled + (1 - M.fled) * 0.72, p));
+    const fledMix = fledIn * (1 - 0.88 * fledOut);
     const px = 1 / (fit.s * z); // one screen pixel in map units
     const dotR = 1.1;
 
@@ -232,14 +234,17 @@ async function init() {
       ctx.stroke();
       ctx.shadowBlur = 0;
       if (oneP > 0.82) {
-        // the line goes out; a bone point remains
+        // the line goes out; a soft bone point remains
         const fade = ease(0.82, 1, oneP);
         ctx.fillStyle = BONE;
         ctx.globalAlpha = fade;
-        const r = 3.2 * px + 1.2;
+        ctx.shadowColor = BONE;
+        ctx.shadowBlur = 14;
+        const r = 2.6 * px + 1;
         ctx.beginPath();
         ctx.arc(first.x, first.y, r, 0, Math.PI * 2);
         ctx.fill();
+        ctx.shadowBlur = 0;
         ctx.globalAlpha = 1;
       }
     }
@@ -251,7 +256,7 @@ async function init() {
     if (inReplay) {
       const TOTAL = 13050; // all deaths incl. the ~0.5% FARS couldn't geocode
       const n = Math.floor(Math.min(replayP, 1) * pts.length);
-      const yr = n > 0 ? pts[Math.min(n, pts.length - 1) - (n === pts.length ? 1 : 0)]?.year ?? 2010 : 2010;
+      const yr = pts[Math.max(0, n - 1)]?.year ?? 2010;
       hudYear.textContent = replayP >= 1 ? '2010–2024' : String(yr);
       hudCount.textContent = (replayP >= 1 ? TOTAL : n).toLocaleString();
     }

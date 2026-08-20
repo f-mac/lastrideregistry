@@ -94,9 +94,9 @@ function lineChart({ el, years, values, color, fmt, yTicks, pct }) {
     svg.appendChild(lbl);
   });
 
+  // no area fill: the y-axis is truncated, and a fill under a truncated
+  // baseline visually inflates the trend
   const d = values.map((v, i) => `${i ? 'L' : 'M'}${x(i)},${y(v)}`).join('');
-  svg.appendChild(svgEl('path', { d: `${d}L${x(values.length - 1)},${H - m.b}L${x(0)},${H - m.b}Z`,
-    fill: color, opacity: 0.07 }));
   svg.appendChild(svgEl('path', { d, fill: 'none', stroke: color, 'stroke-width': 2,
     'stroke-linejoin': 'round', 'stroke-linecap': 'round' }));
 

@@ -39,9 +39,9 @@ import '../styles/global.css';
         <div class="scene-card">
           <p class="kicker">One ride</p>
           <p>
-            A ride is a line — from somewhere, toward somewhere. On the evening of
-            <strong>January&nbsp;2,&nbsp;2010</strong>, on an unlit road in Worcester County,
-            Maryland, a driver struck and killed a <strong>23-year-old man</strong> on a bicycle.
+            A ride is a line — from somewhere, toward somewhere. On the evening
+            of&#32;<strong>January&nbsp;2,&nbsp;2010</strong>, on an unlit road in Worcester County,
+            Maryland, a driver struck and killed a&#32;<strong>23-year-old man</strong> on a bicycle.
           </p>
           <p>His line stopped there. It was the second day of the decade.</p>
         </div>
@@ -52,7 +52,7 @@ import '../styles/global.css';
           <p class="kicker">Fifteen years</p>
           <p>
             Keep scrolling. Every light is a person on a bicycle, in the place where a driver
-            killed them — <strong>replayed in the order it happened</strong>, 2010 through 2024.
+            killed them —&#32;<strong>replayed in the order it happened</strong>, 2010 through 2024.
           </p>
         </div>
       </section>
@@ -62,8 +62,8 @@ import '../styles/global.css';
           <p class="kicker">The toll</p>
           <p>
             <span class="stat">13,050 people</span> were killed riding bicycles on American roads
-            in fifteen years. Annual deaths rose <strong>88%</strong> — from 623 in 2010 to a
-            record 1,173 in 2023.
+            in fifteen years. Annual deaths rose&#32;<strong>88%</strong> — from 623 in 2010 to a
+            record 1,173 in 2023. The preliminary 2024 count dips to 1,103; NHTSA will revise it.
           </p>
           <p>
             Nearly half were killed in the dark. More were killed by SUVs and pickups than ever
@@ -77,11 +77,12 @@ import '../styles/global.css';
         <div class="scene-card">
           <p class="kicker">The drivers</p>
           <p>
-            The red lights are hit-and-runs. In 2010, <span class="stat stat--red">15%</span> of
-            drivers who killed a cyclist fled the scene. By 2023 it was&#32;<span class="stat stat--red">23%</span> — nearly one in four.
+            The red lights are hit-and-runs. In 2010,&#32;<span class="stat stat--red">15%</span> of
+            drivers who killed a cyclist fled the scene. By 2023 it was&#32;<span
+              class="stat stat--red">23%</span> — nearly one in four.
           </p>
           <p>
-            And after the crash? <strong>No agency in America tracks what happens to the
+            And after the crash?&#32;<strong>No agency in America tracks what happens to the
             drivers.</strong> Whether they were charged, convicted, or simply drove home is not
             recorded anywhere — so we are building the registry that records it.
           </p>
@@ -112,13 +113,19 @@ import '../styles/global.css';
           Each white bike marks one person, at the location recorded by the responding agency.
           Zoom in to your town. Click a marker for what is known — and what is not yet known.
         </p>
+        <p class="mono" style="margin-top: 1rem;">
+          65 deaths lack precise coordinates; they are in the CSV, not on the map.
+        </p>
       </div>
       <div id="map-filters">
-        <label>Years
-          <input type="range" id="year-min" min="2010" max="2024" value="2010" />
-          <input type="range" id="year-max" min="2010" max="2024" value="2024" />
+        <div class="year-filter">
+          <span>Years</span>
+          <div class="range-pair">
+            <input type="range" id="year-min" min="2010" max="2024" value="2010" aria-label="First year" />
+            <input type="range" id="year-max" min="2010" max="2024" value="2024" aria-label="Last year" />
+          </div>
           <span id="year-readout">2010–2024</span>
-        </label>
+        </div>
         <label><input type="checkbox" id="f-hitrun" class="red" /> hit-and-run only</label>
         <label><input type="checkbox" id="f-dark" /> after dark only</label>
         <span id="map-count" style="color: var(--amber);"></span>
