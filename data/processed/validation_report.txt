@@ -1,0 +1,23 @@
+Last Ride Registry — validation report
+
+Deaths per year (ours) — NHTSA published pedalcyclist totals for spot-check:
+  2010: 623  published≈623  Δ0.0%  ✓
+  2011: 682
+  2012: 734
+  2013: 749
+  2014: 729
+  2015: 829  published≈829  Δ0.0%  ✓
+  2016: 853
+  2017: 806
+  2018: 871  published≈871  Δ0.0%  ✓
+  2019: 858
+  2020: 947  published≈948  Δ0.1%  ✓
+  2021: 976  published≈966  Δ1.0%  ✓
+  2022: 1117  published≈1105  Δ1.1%  ✓
+  2023: 1173  published≈1166  Δ0.6%  ✓
+  2024: 1103
+
+Geocoded rows: 99.5%
+Hit-and-run share 2019: 16.4% (AAA: 16.5%)
+Hit-and-run share 2023: 23.4% (AAA: 23.6%)
+Total rows: 13050
