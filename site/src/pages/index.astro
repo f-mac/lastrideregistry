@@ -1,282 +1,142 @@
 ---
-import '../styles/global.css';
+import Base from '../layouts/Base.astro';
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Last Ride Registry — every US cyclist killed by a driver, 2010–2024</title>
-    <meta
-      name="description"
-      content="An open registry of the 13,050 people killed while riding bicycles on US roads since 2010. Open data, verified accountability tracking, built to be used."
-    />
-    <meta property="og:title" content="Last Ride Registry" />
-    <meta
-      property="og:description"
-      content="13,050 rides never made it home. An open registry of every US cyclist killed by a driver since 2010."
-    />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  </head>
-  <body>
-    <!-- ============ scroll experience ============ -->
-    <div id="experience">
-      <canvas id="ride-canvas" aria-hidden="true"></canvas>
+<Base
+  title="Last Ride Registry — every US cyclist killed by a driver, 2010–2024"
+  description="An open registry of the 13,050 people killed while riding bicycles on US roads since 2010, with the data free to download."
+  current="/"
+>
+  <!-- ============ scroll experience ============ -->
+  <div id="experience">
+    <canvas id="ride-canvas" aria-hidden="true"></canvas>
 
-      <div id="hero">
-        <h1>Last Ride<br /><em>Registry</em></h1>
-        <p class="sub">Every cyclist killed by a driver on a US road · 2010–2024</p>
-        <p class="scroll-cue">scroll</p>
-      </div>
-
-      <div id="hud" aria-hidden="true">
-        <div class="hud-year">2010</div>
-        <div class="hud-count">0</div>
-        <div class="hud-label">riders killed</div>
-      </div>
-
-      <section class="scene" data-scene="one" aria-label="One ride">
-        <div class="scene-card">
-          <p class="kicker">One ride</p>
-          <p>
-            A ride is a line — from somewhere, toward somewhere. On the evening
-            of&#32;<strong>January&nbsp;2,&nbsp;2010</strong>, on an unlit road in Worcester County,
-            Maryland, a driver struck and killed a&#32;<strong>23-year-old man</strong> on a bicycle.
-          </p>
-          <p>His line stopped there. It was the second day of the decade.</p>
-        </div>
-      </section>
-
-      <section class="scene scene--tall" data-scene="replay" aria-label="Fifteen years replayed">
-        <div class="scene-card">
-          <p class="kicker">Fifteen years</p>
-          <p>
-            Keep scrolling. Every light is a person on a bicycle, in the place where a driver
-            killed them —&#32;<strong>replayed in the order it happened</strong>, 2010 through 2024.
-          </p>
-        </div>
-      </section>
-
-      <section class="scene" data-scene="toll" aria-label="The toll">
-        <div class="scene-card">
-          <p class="kicker">The toll</p>
-          <p>
-            <span class="stat">13,050 people</span> were killed riding bicycles on American roads
-            in fifteen years. Annual deaths rose&#32;<strong>88%</strong> — from 623 in 2010 to a
-            record 1,173 in 2023. The preliminary 2024 count dips to 1,103; NHTSA will revise it.
-          </p>
-          <p>
-            Nearly half were killed in the dark. More were killed by SUVs and pickups than ever
-            before. The median victim was not a child on a cul-de-sac; it was an adult in their
-            fifties, riding a road they likely knew well.
-          </p>
-        </div>
-      </section>
-
-      <section class="scene" data-scene="fled" aria-label="The drivers who fled">
-        <div class="scene-card">
-          <p class="kicker">The drivers</p>
-          <p>
-            The red lights are hit-and-runs. In 2010,&#32;<span class="stat stat--red">15%</span> of
-            drivers who killed a cyclist fled the scene. By 2023 it was&#32;<span
-              class="stat stat--red">23%</span> — nearly one in four.
-          </p>
-          <p>
-            And after the crash?&#32;<strong>No agency in America tracks what happens to the
-            drivers.</strong> Whether they were charged, convicted, or simply drove home is not
-            recorded anywhere — so we are building the registry that records it.
-          </p>
-        </div>
-      </section>
-
-      <section class="scene" data-scene="handoff" aria-label="Explore">
-        <div class="scene-card">
-          <p class="kicker">The registry</p>
-          <p>
-            Every one of these deaths is in the open dataset below — mapped, documented, and free
-            for anyone to use. Explore the map. Take the data. Hold someone accountable.
-          </p>
-          <div class="cta-row">
-            <a class="btn btn--amber" href="#registry">Explore the map</a>
-            <a class="btn" href="#data">Download the data</a>
-          </div>
-        </div>
-      </section>
+    <div id="hero">
+      <h1>Last Ride<br /><em>Registry</em></h1>
+      <p class="sub">Every cyclist killed by a driver on a US road · 2010–2024</p>
+      <p class="scroll-cue">scroll</p>
     </div>
 
-    <!-- ============ registry map ============ -->
-    <section id="registry" aria-label="Registry map">
-      <div class="section" style="padding-bottom: 2rem;">
-        <p class="kicker">The registry</p>
-        <h2>12,985 places where a ride ended</h2>
-        <p class="lede">
-          Each white bike marks one person, at the location recorded by the responding agency.
-          Zoom in to your town. Click a marker for what is known — and what is not yet known.
-        </p>
-        <p class="mono" style="margin-top: 1rem;">
-          65 deaths lack precise coordinates; they are in the CSV, not on the map.
-        </p>
-      </div>
-      <div id="map-filters">
-        <div class="year-filter">
-          <span>Years</span>
-          <div class="range-pair">
-            <input type="range" id="year-min" min="2010" max="2024" value="2010" aria-label="First year" />
-            <input type="range" id="year-max" min="2010" max="2024" value="2024" aria-label="Last year" />
-          </div>
-          <span id="year-readout">2010–2024</span>
-        </div>
-        <label><input type="checkbox" id="f-hitrun" class="red" /> hit-and-run only</label>
-        <label><input type="checkbox" id="f-dark" /> after dark only</label>
-        <span id="map-count" style="color: var(--amber);"></span>
-      </div>
-      <div id="map-wrap">
-        <div id="registry-map"></div>
-      </div>
-    </section>
+    <div id="hud" aria-hidden="true">
+      <div class="hud-year">2010</div>
+      <div class="hud-count">0</div>
+      <div class="hud-label">riders killed</div>
+    </div>
 
-    <!-- ============ recent, curated ============ -->
-    <section id="recent" aria-label="Recent deaths">
-      <div class="section">
-        <p class="kicker">Too recent for the federal data</p>
-        <h2>The registry doesn't wait eighteen months</h2>
-        <p class="lede">
-          Federal crash data lags a year or more. The deaths below are curated by hand from
-          published news reports — named, cited, and updated as the legal process moves. Our
-          rules for what gets published, and how to request a correction, are in the
-          open:&#32;<a href="https://github.com/f-mac/lastrideregistry/blob/main/EDITORIAL.md">EDITORIAL.md</a>.
-        </p>
-        <div id="recent-cases"></div>
-      </div>
-    </section>
-
-    <hr class="rule" />
-
-    <!-- ============ the pattern ============ -->
-    <section id="pattern" aria-label="The pattern">
-      <div class="section">
-        <p class="kicker">The pattern</p>
-        <h2>This is not an accident. It is a trend.</h2>
-        <p class="lede">
-          Fifteen years of federal crash data, one row per person. The numbers below reconcile
-          with NHTSA's published totals to within a fraction of a percent — check our math, it's
-          all downloadable.
-        </p>
-        <div class="chart-grid" id="charts"></div>
-      </div>
-    </section>
-
-    <hr class="rule" />
-
-    <!-- ============ open data ============ -->
-    <section id="data" aria-label="Open data">
-      <div class="section">
-        <p class="kicker">Open data</p>
-        <h2>Take it. Build on it. That's the point.</h2>
-        <p class="lede">
-          The White Line, city dashboards, and federal reports let you look. This registry lets
-          you <em>use</em>: one clean CSV, one row per person killed, versioned in the open.
-        </p>
-        <div class="data-cols">
-          <div>
-            <h3>The dataset</h3>
-            <p>
-              Every pedalcyclist fatality in NHTSA's Fatality Analysis Reporting System,
-              2010–2024, cleaned and joined: date, location (99.5% geocoded), age, sex, light
-              condition, striking vehicle class, and crash-level hit-and-run, impaired-driver and
-              speeding flags.
-            </p>
-            <div class="file-row">
-              <a href="/data/cyclist_fatalities.csv" download>cyclist_fatalities.csv</a>
-              <span class="size">13,050 rows · 1.4 MB · CC BY 4.0</span>
-            </div>
-            <div class="file-row">
-              <a href="/data/DATA_DICTIONARY.md" download>DATA_DICTIONARY.md</a>
-              <span class="size">column definitions &amp; caveats</span>
-            </div>
-            <div class="file-row">
-              <a href="/data/aggregates.json">aggregates.json</a>
-              <span class="size">pre-computed chart data · JSON</span>
-            </div>
-          </div>
-          <div>
-            <h3>Methodology</h3>
-            <ul>
-              <li>Source: NHTSA FARS annual files (public domain), person type 6–7, fatal injury.</li>
-              <li>Validated: yearly totals match NHTSA published counts (2010: exact; 2023: 1,173 exact).</li>
-              <li>Hit-and-run, impairment and speeding are crash-level flags — "any vehicle in the crash," NHTSA's own convention.</li>
-              <li>2024 is NHTSA's Annual Report File and will be revised; we re-release when FARS finalizes.</li>
-              <li>Pipeline code is open source — every transform is inspectable and re-runnable.</li>
-            </ul>
-          </div>
-          <div>
-            <h3>License</h3>
-            <p>
-              Data: <strong>CC BY 4.0</strong> — use it for anything, credit "Last Ride
-              Registry." Code: <strong>MIT</strong>. Upstream FARS data is US-government public
-              domain. Cite it, fork it, print it, take it to a city council meeting.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <hr class="rule" />
-
-    <!-- ============ what's next ============ -->
-    <section id="next" aria-label="What comes next">
-      <div class="section">
-        <p class="kicker">What comes next</p>
-        <h2>The question no dataset answers: what happened to the driver?</h2>
-        <div class="roadmap">
-          <div class="step now">
-            <span class="tag">Now — v1</span>
-            <h3>The open registry</h3>
-            <p>Every death since 2010, mapped and downloadable. You are looking at it.</p>
-          </div>
-          <div class="step">
-            <span class="tag">Next — v2</span>
-            <h3>Verified accountability</h3>
-            <p>
-              For every 2023 hit-and-run death — roughly 275 cases, old enough that prosecutions
-              have resolved — we will trace the outcome through court records: charged or not,
-              convicted or not, sentence or nothing. Not scraped headlines. Records. Published
-              as open data, case by case, with citations.
-            </p>
-          </div>
-          <div class="step">
-            <span class="tag">Then — v3</span>
-            <h3>Every year, every case</h3>
-            <p>
-              Expand cohort by cohort until "was the driver charged?" has a public answer for
-              every cyclist killed in America — and a correction channel so families and local
-              advocates can keep it honest.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      <div class="section">
+    <section class="scene" data-scene="one" aria-label="One ride">
+      <div class="scene-card">
+        <p class="kicker">One ride</p>
         <p>
-          LAST RIDE REGISTRY · lastrideregistry.com · Fatality data: NHTSA Fatality Analysis
-          Reporting System (public domain). Site data © Last Ride Registry, CC BY 4.0. Code MIT.
-          Basemap © <a href="https://carto.com/attributions">CARTO</a> ·
-          © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors.
-          Built in memory of everyone whose ride ended here. Corrections and contributions
-          welcome.
+          A ride is a line — from somewhere, toward somewhere. The single light below marks
+          where one of those lines stopped: <strong>one person on a bicycle, killed by a
+          driver</strong>.
+        </p>
+        <p>Fifteen years of American roads hold 13,050 of these lights.</p>
+      </div>
+    </section>
+
+    <section class="scene scene--tall" data-scene="replay" aria-label="Fifteen years replayed">
+      <div class="scene-card">
+        <p class="kicker">Fifteen years</p>
+        <p>
+          Keep scrolling. Every light is a person on a bicycle, in the place where a driver
+          killed them —&#32;<strong>replayed in the order it happened</strong>, 2010 through 2024.
         </p>
       </div>
-    </footer>
+    </section>
 
-    <div id="tooltip" role="tooltip"></div>
+    <section class="scene" data-scene="toll" aria-label="The toll">
+      <div class="scene-card">
+        <p class="kicker">The toll</p>
+        <p>
+          <span class="stat">13,050 people</span> were killed riding bicycles on American roads
+          in fifteen years. Annual deaths rose&#32;<strong>88%</strong> — from 623 in 2010 to a
+          record 1,173 in 2023. The preliminary 2024 count dips to 1,103; NHTSA will revise it.
+        </p>
+        <p>
+          Nearly half were killed in the dark. More were killed by SUVs and pickups than ever
+          before. <span class="stat">1,196</span> of them were <strong>children</strong>.
+        </p>
+      </div>
+    </section>
 
-    <script>
-      import '../scripts/landing.js';
-      import '../scripts/registry-map.js';
-      import '../scripts/charts.js';
-      import '../scripts/recent.js';
-    </script>
-  </body>
-</html>
+    <section class="scene" data-scene="fled" aria-label="The drivers who fled">
+      <div class="scene-card">
+        <p class="kicker">The drivers</p>
+        <p>
+          The red lights are hit-and-runs. In 2010,&#32;<span class="stat stat--red">15%</span> of
+          drivers who killed a cyclist fled the scene. By 2023 it was&#32;<span
+            class="stat stat--red">23%</span> — nearly one in four.
+        </p>
+        <p>
+          And after the crash?&#32;<strong>No national database records what happened to the
+          driver.</strong> Charged, convicted, or simply drove home — the federal record stops
+          at the death. We are building the registry that follows what came after.
+        </p>
+      </div>
+    </section>
+
+    <section class="scene" data-scene="handoff" aria-label="Explore">
+      <div class="scene-card">
+        <p class="kicker">The registry</p>
+        <p>
+          Every death here is in the open dataset — mapped, documented, and free to use. Look
+          up your own town, or take the numbers to a council meeting and ask what changed on
+          that road afterward.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn--amber" href="#registry">Explore the map</a>
+          <a class="btn" href="/data">Download the data</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ registry map ============ -->
+  <section id="registry" aria-label="Registry map">
+    <div class="section" style="padding-bottom: 2rem;">
+      <p class="kicker">The registry</p>
+      <h2>12,985 places where a ride ended</h2>
+      <p class="lede">
+        Each white bike marks one person, at the location recorded by the responding agency.
+        Zoom in to your town. Click a marker for the details on record.
+      </p>
+      <p class="mono" style="margin-top: 1rem;">
+        65 deaths lack precise coordinates; they are in the CSV, not on the map.
+      </p>
+    </div>
+    <div id="map-filters">
+      <div class="year-filter">
+        <span>Years</span>
+        <div class="range-pair">
+          <input type="range" id="year-min" min="2010" max="2024" value="2010" aria-label="First year" />
+          <input type="range" id="year-max" min="2010" max="2024" value="2024" aria-label="Last year" />
+        </div>
+        <span id="year-readout">2010–2024</span>
+      </div>
+      <label><input type="checkbox" id="f-hitrun" class="red" /> hit-and-run only</label>
+      <label><input type="checkbox" id="f-dark" /> after dark only</label>
+      <span id="map-count" style="color: var(--amber);"></span>
+    </div>
+    <div id="map-wrap">
+      <div id="registry-map"></div>
+    </div>
+  </section>
+
+  <!-- ============ onward ============ -->
+  <section id="continue" aria-label="More of the registry">
+    <div class="section" style="padding: 4rem 1.5rem;">
+      <p class="lede">The map is the start. The rest of the registry:</p>
+      <div class="cta-row">
+        <a class="btn" href="/cases">Recent cases</a>
+        <a class="btn" href="/data">Data &amp; trends</a>
+        <a class="btn" href="/about">About &amp; roadmap</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    import '../scripts/landing.js';
+    import '../scripts/registry-map.js';
+  </script>
+</Base>

@@ -157,7 +157,7 @@ async function init() {
       if (p.veh >= 0) bits.push(`Struck by: ${vehicles[p.veh]}`);
       if (p.dark) bits.push('After dark');
       if (p.hitRun) bits.push('<span class="popup-flag">Driver fled the scene</span>');
-      bits.push('<div class="popup-outcome">Driver outcome: not yet tracked.<br/>Verified accountability data is v2 of this registry.</div>');
+      bits.push('<div class="popup-outcome">Driver outcome: not in the federal record.<br/>We are tracing outcomes case by case.</div>');
       popup.setLngLat(f.geometry.coordinates).setHTML(bits.join('<br/>')).addTo(map);
     });
     map.on('click', 'clusters', async (e) => {

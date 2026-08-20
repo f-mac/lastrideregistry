@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Recent cases — Last Ride Registry"
+  description="Cyclist deaths too recent for the federal data: named, cited from published news reports, and updated as the legal process moves."
+  current="/cases"
+>
+  <section id="recent" aria-label="Recent deaths">
+    <div class="section">
+      <p class="kicker">Too recent for the federal data</p>
+      <h2>Deaths the federal data hasn't caught up to</h2>
+      <p class="lede">
+        Federal crash data lags a year or more. The deaths below are curated by hand from
+        published news reports — named, cited, and updated as the legal process moves. Our
+        rules for what gets published, and how to request a correction, are in the
+        open:&#32;<a href="https://github.com/f-mac/lastrideregistry/blob/main/EDITORIAL.md">EDITORIAL.md</a>.
+      </p>
+      <div id="recent-cases"></div>
+    </div>
+  </section>
+
+  <script>
+    import '../scripts/recent.js';
+  </script>
+</Base>

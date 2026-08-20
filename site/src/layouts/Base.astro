@@ -1,0 +1,60 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  /** current nav item, matched against href */
+  current?: string;
+}
+
+const { title, description, current } = Astro.props;
+
+const nav = [
+  { href: '/', label: 'Registry' },
+  { href: '/cases', label: 'Cases' },
+  { href: '/data', label: 'Data' },
+  { href: '/about', label: 'About' },
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <link rel="canonical" href={`https://lastrideregistry.com${Astro.url.pathname}`} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <nav class="site-nav" aria-label="Site">
+      <a class="site-nav-brand" href="/">Last Ride Registry</a>
+      <div class="site-nav-links">
+        {nav.map((item) => (
+          <a href={item.href} aria-current={item.href === current ? 'page' : undefined}>
+            {item.label}
+          </a>
+        ))}
+      </div>
+    </nav>
+
+    <slot />
+
+    <footer>
+      <div class="section">
+        <p>
+          LAST RIDE REGISTRY · lastrideregistry.com · Fatality data: NHTSA Fatality Analysis
+          Reporting System (public domain). Site data © Last Ride Registry, CC BY 4.0. Code MIT.
+          Basemap © <a href="https://carto.com/attributions">CARTO</a> ·
+          © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors.
+          Built in memory of everyone in this registry.
+          Corrections:&#32;<a href="https://github.com/f-mac/lastrideregistry/issues">open an issue</a> —
+          our policy is in&#32;<a href="https://github.com/f-mac/lastrideregistry/blob/main/EDITORIAL.md">EDITORIAL.md</a>.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
