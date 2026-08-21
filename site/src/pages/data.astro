@@ -37,6 +37,18 @@ import Base from '../layouts/Base.astro';
             <a href="/data/aggregates.json">aggregates.json</a>
             <span class="size">pre-computed chart data · JSON</span>
           </div>
+          <div class="file-row">
+            <a href="/data/cases.json">cases.json</a>
+            <span class="size">named, cited recent cases · JSON</span>
+          </div>
+          <p style="margin-top: 1.2rem;">
+            The CSV is anonymous because its source is: NHTSA strips all names and personal
+            identifiers from FARS before release. Names appear only in the curated case files
+            above, where each one is verified against published reporting under the rules
+            in&#32;<a href="https://github.com/f-mac/lastrideregistry/blob/main/EDITORIAL.md">EDITORIAL.md</a>.
+            Driver names and court outcomes, traced through public records, are the next
+            phase of the registry.
+          </p>
         </div>
         <div>
           <h3>Methodology</h3>

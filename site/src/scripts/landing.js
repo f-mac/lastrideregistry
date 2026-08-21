@@ -153,8 +153,8 @@ async function init() {
     ctx.translate(-cx, -cy);
 
     // state outlines (skip pre-render when zoomed; draw live for crispness)
-    ctx.strokeStyle = '#20242d';
-    ctx.lineWidth = 0.8 / (fit.s * z);
+    ctx.strokeStyle = '#39414f';
+    ctx.lineWidth = 1 / (fit.s * z);
     ctx.globalAlpha = 0.55 + 0.45 * zoomOut;
     ctx.beginPath();
     const path = pathFrom(ctx);
