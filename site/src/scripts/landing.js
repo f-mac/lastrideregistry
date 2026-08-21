@@ -155,7 +155,9 @@ async function init() {
       Math.min(1, Math.max(0, (el.offsetTop + el.offsetHeight * frac - top - vh * 0.5) / total));
     return {
       one: at(scenes.one),
-      replayIn: at(scenes.replay, 0.06),
+      // lights start as the One Ride card exits, not deep into the replay
+      // scene — the zoom-out (which ends at replayIn) tightens with it
+      replayIn: at(scenes.one, 0.98),
       replayOut: at(scenes.replay, 0.97),
       toll: at(scenes.toll),
       fled: at(scenes.fled),
