@@ -21,13 +21,16 @@ import Base from '../layouts/Base.astro';
           <h3>The dataset</h3>
           <p>
             Every pedalcyclist fatality in NHTSA's Fatality Analysis Reporting System,
-            2010–2024, cleaned and joined: date, location (99.5% geocoded), age, sex, light
-            condition, striking vehicle class, and crash-level hit-and-run, impaired-driver and
-            speeding flags.
+            2010–2024, cleaned and joined across the FARS crash, person and vehicle tables —
+            37 columns per death: date, day of week, location (99.5% geocoded), street and
+            cross street, road class, weather, victim age and sex, where they died, light
+            condition, striking vehicle class and speed against the posted limit, and the
+            striking driver's age, license status, and prior crashes, DWI and speeding
+            convictions from state records.
           </p>
           <div class="file-row">
             <a href="/data/cyclist_fatalities.csv" download>cyclist_fatalities.csv</a>
-            <span class="size">13,050 rows · 1.4 MB · CC BY 4.0</span>
+            <span class="size">13,050 rows · 37 columns · 2.7 MB · CC BY 4.0</span>
           </div>
           <div class="file-row">
             <a href="/data/DATA_DICTIONARY.md" download>DATA_DICTIONARY.md</a>
