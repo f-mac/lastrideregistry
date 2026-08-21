@@ -43,19 +43,59 @@ async function init() {
   const first = pts[0]; // 2010-01-02, Worcester County MD
 
   // scene one: a winding route that ends where the ride ended. Stylized —
-  // FARS records only the crash point, so the path is a drawing, not a claim.
+  // FARS records only the crash point, so the path is a drawing, not a claim —
+  // but it must stay on land (the first death is on Maryland's Eastern Shore,
+  // and an unconstrained walk rides straight across the Chesapeake).
+  function onLand(x, y) {
+    // even-odd test over every state ring; bays and ocean fall outside
+    let inside = false;
+    for (const f of states.features) {
+      const g = f.geometry;
+      const polys = g.type === 'Polygon' ? [g.coordinates] : g.coordinates;
+      for (const rings of polys)
+        for (const ring of rings)
+          for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+            const [xi, yi] = ring[i], [xj, yj] = ring[j];
+            if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi)
+              inside = !inside;
+          }
+    }
+    return inside;
+  }
+
   const route = (() => {
     const LEN = 34, STEPS = 56, step = LEN / STEPS;
+    // deterministic deflection order: straight first, then steer harder
+    const DEFLECT = [0, 0.35, -0.35, 0.7, -0.7, 1.1, -1.1, 1.6, -1.6, 2.2, -2.2, 2.8, -2.8, Math.PI];
     const base = Math.atan2(first.ay, first.ax);
     const rp = [{ x: first.x, y: first.y }];
-    let x = first.x, y = first.y;
+    let x = first.x, y = first.y, bias = 0;
     for (let i = 1; i <= STEPS; i++) {
       const t = i / STEPS;
-      // walk backward from the death point with a gently wandering heading
-      const h = base + Math.PI + 0.55 * Math.sin(t * 5.1 + 1.3) + 0.35 * Math.sin(t * 11.7 + 4.2);
-      x += Math.cos(h) * step;
-      y += Math.sin(h) * step;
+      // walk backward from the death point with a gently wandering heading;
+      // bias carries the last water-deflection so the path doesn't zigzag
+      const want = base + Math.PI + bias
+        + 0.55 * Math.sin(t * 5.1 + 1.3) + 0.35 * Math.sin(t * 11.7 + 4.2);
+      let moved = false;
+      for (const off of DEFLECT) {
+        const nx = x + Math.cos(want + off) * step;
+        const ny = y + Math.sin(want + off) * step;
+        if (onLand(nx, ny)) {
+          x = nx; y = ny;
+          bias += off * 0.6;
+          moved = true;
+          break;
+        }
+      }
+      if (!moved) { x += Math.cos(want) * step; y += Math.sin(want) * step; }
       rp.push({ x, y });
+    }
+    // one light smoothing pass (endpoints fixed) so coast-hugging stays gentle
+    for (let i = 1; i < rp.length - 1; i++) {
+      rp[i] = {
+        x: rp[i - 1].x * 0.25 + rp[i].x * 0.5 + rp[i + 1].x * 0.25,
+        y: rp[i - 1].y * 0.25 + rp[i].y * 0.5 + rp[i + 1].y * 0.25,
+      };
     }
     rp.reverse(); // rp[0] = start of the ride, last = where it ended
     let acc = 0;
