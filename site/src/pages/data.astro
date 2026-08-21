@@ -1,0 +1,99 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Open data — Last Ride Registry"
+  description="Every US cyclist fatality 2010–2024 in one CSV, plus fifteen years of trends. CC BY 4.0 — free to download and reuse."
+  current="/data"
+>
+  <!-- ============ open data ============ -->
+  <section id="data" aria-label="Open data">
+    <div class="section">
+      <p class="kicker">Open data</p>
+      <h2>Every death, one CSV</h2>
+      <p class="lede">
+        One row per person killed, 2010–2024, versioned in the open. No portal or login — a
+        plain CSV you can cite, fork, or take to a city council meeting.
+      </p>
+      <div class="data-cols">
+        <div>
+          <h3>The dataset</h3>
+          <p>
+            Every pedalcyclist fatality in NHTSA's Fatality Analysis Reporting System,
+            2010–2024, cleaned and joined across the FARS crash, person and vehicle tables —
+            37 columns per death: date, day of week, location (99.5% geocoded), street and
+            cross street, road class, weather, victim age and sex, where they died, light
+            condition, striking vehicle class and speed against the posted limit, and the
+            striking driver's age, license status, and prior crashes, DWI and speeding
+            convictions from state records.
+          </p>
+          <div class="file-row">
+            <a href="/data/cyclist_fatalities.csv" download>cyclist_fatalities.csv</a>
+            <span class="size">13,050 rows · 37 columns · 2.7 MB · CC BY 4.0</span>
+          </div>
+          <div class="file-row">
+            <a href="/data/DATA_DICTIONARY.md" download>DATA_DICTIONARY.md</a>
+            <span class="size">column definitions &amp; caveats</span>
+          </div>
+          <div class="file-row">
+            <a href="/data/aggregates.json">aggregates.json</a>
+            <span class="size">pre-computed chart data · JSON</span>
+          </div>
+          <div class="file-row">
+            <a href="/data/cases.json">cases.json</a>
+            <span class="size">named, cited recent cases · JSON</span>
+          </div>
+          <p style="margin-top: 1.2rem;">
+            The CSV is anonymous because its source is: NHTSA strips all names and personal
+            identifiers from FARS before release. Names appear only in the curated case files
+            above, where each one is verified against published reporting under the rules
+            in&#32;<a href="https://github.com/f-mac/lastrideregistry/blob/main/EDITORIAL.md">EDITORIAL.md</a>.
+            Driver names and court outcomes, traced through public records, are the next
+            phase of the registry.
+          </p>
+        </div>
+        <div>
+          <h3>Methodology</h3>
+          <ul>
+            <li>Source: NHTSA FARS annual files (public domain), person type 6–7, fatal injury.</li>
+            <li>Validated: yearly totals match NHTSA published counts (2010: exact; 2023: 1,173 exact).</li>
+            <li>Hit-and-run, impairment and speeding are crash-level flags — "any vehicle in the crash," NHTSA's own convention.</li>
+            <li>2024 is NHTSA's Annual Report File and will be revised; we re-release when FARS finalizes.</li>
+            <li>Pipeline code is open source — every transform is inspectable and re-runnable.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>License</h3>
+          <p>
+            Data: <strong>CC BY 4.0</strong> — use it for anything, credit "Last Ride
+            Registry." Code: <strong>MIT</strong>. Upstream FARS data is US-government public
+            domain.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- ============ the pattern ============ -->
+  <section id="pattern" aria-label="The pattern">
+    <div class="section">
+      <p class="kicker">The pattern</p>
+      <h2>What fifteen years of data show</h2>
+      <p class="lede">
+        Fifteen years of federal crash data, one row per person. The numbers below reconcile
+        with NHTSA's published totals to within a fraction of a percent, and every row behind
+        them is downloadable above.
+      </p>
+      <div class="chart-grid" id="charts"></div>
+    </div>
+  </section>
+
+  <div id="tooltip" role="tooltip"></div>
+
+  <script>
+    import '../scripts/charts.js';
+  </script>
+</Base>

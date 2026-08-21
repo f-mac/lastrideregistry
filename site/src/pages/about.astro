@@ -1,0 +1,71 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="About — Last Ride Registry"
+  description="Why the registry exists, how cases are published and corrected, and what comes next: tracing what happened to the drivers, case by case."
+  current="/about"
+>
+  <!-- ============ mission ============ -->
+  <section id="mission" aria-label="Why this exists">
+    <div class="section" style="padding-bottom: 3rem;">
+      <p class="kicker">Why this exists</p>
+      <h2>The federal record stops at the death</h2>
+      <p class="lede">
+        NHTSA counts every cyclist killed by a driver. No national database records whether
+        the driver was charged, convicted, or never heard from again. This registry exists so
+        the answer is public: every death mapped and downloadable, and case by case, what came
+        after.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ editorial policy ============ -->
+  <section id="editorial" aria-label="Editorial policy">
+    <div class="section" style="padding-top: 0; padding-bottom: 3rem;">
+      <p class="kicker">How we publish</p>
+      <h2>Facts only, cited, correctable</h2>
+      <p class="lede">
+        Every named case traces to a published news report or a court record, linked inline.
+        Drivers are named only once formally charged. Legal status is always dated, never
+        final. Families can request corrections or removal — the full policy is public
+        in&#32;<a href="https://github.com/f-mac/lastrideregistry/blob/main/EDITORIAL.md">EDITORIAL.md</a>,
+        and every change is visible in the repository history.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ roadmap ============ -->
+  <section id="next" aria-label="What comes next">
+    <div class="section" style="padding-top: 0;">
+      <p class="kicker">What comes next</p>
+      <h2>The question the federal data never answers: what happened to the driver?</h2>
+      <div class="roadmap">
+        <div class="step now">
+          <span class="tag">Now — v1</span>
+          <h3>The open registry</h3>
+          <p>Every death since 2010, mapped and downloadable, with recent cases curated by hand.</p>
+        </div>
+        <div class="step">
+          <span class="tag">Next — v2</span>
+          <h3>Verified accountability</h3>
+          <p>
+            For every 2023 hit-and-run death — roughly 275 cases, old enough that prosecutions
+            have resolved — we will trace each outcome through court records rather than news
+            coverage, and publish it as open data, case by case, with citations.
+          </p>
+        </div>
+        <div class="step">
+          <span class="tag">Then — v3</span>
+          <h3>Every year, every case</h3>
+          <p>
+            Expand cohort by cohort until "was the driver charged?" has a public answer for
+            every cyclist killed in America — and a correction channel so families and local
+            advocates can keep it honest.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

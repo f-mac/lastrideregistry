@@ -18,21 +18,43 @@ Upstream FARS data is US-government public domain.
 | `id` | text | `{year}-{st_case}-{per_no}` — unique per victim; `st_case` is the FARS case number, stable within a year |
 | `date` | date | Crash date (YYYY-MM-DD) |
 | `hour` | int | Hour of crash, 0–23 local; empty if unknown |
+| `day_of_week` | text | Sunday–Saturday |
 | `state` | text | USPS state code |
 | `state_name` | text | State name |
 | `state_fips` | int | State FIPS code |
 | `county_fips` | int | County FIPS code (within state); 0/blank if unknown |
 | `latitude`, `longitude` | float | Crash location, 5 decimals, as recorded by the reporting agency; empty when FARS marks it unreported (~0.5% of rows) |
+| `street` | text | Trafficway the crash was on (FARS TWAY_ID), as written by the reporting agency — route numbers and local spellings vary |
+| `cross_street` | text | Second trafficway at intersection crashes (TWAY_ID2); empty otherwise (~38% filled) |
+| `rural_urban` | text | `rural` / `urban` (FARS RUR_URB; derived from ROAD_FNC before 2015) |
+| `road_class` | text | Roadway functional class: interstate, freeway/expressway, principal arterial, minor arterial, major collector, minor collector, local road (FUNC_SYS; ROAD_FNC mapped before 2015) |
+| `intersection` | text | Intersection type: not at intersection, four-way, T, Y, L, traffic circle, roundabout, five-point or more |
+| `weather` | text | Atmospheric conditions: clear, cloudy, rain, snow, fog/smog/smoke, etc.; empty if unknown |
+| `work_zone` | 0/1 | Crash in a work zone |
 | `age` | int | Victim age in years; empty if unknown (FARS 998/999) |
 | `sex` | text | `M` / `F`; empty if unknown or other coding |
 | `person_type` | text | `bicyclist` (FARS 6) or `other cyclist` (FARS 7 — e.g. pedalcycle passenger, unicycle) |
+| `died_at` | text | `at scene`, `en route`, or `later` (died after arrival at hospital), from FARS DOA |
 | `light_condition` | text | Decoded FARS LGT_COND: daylight, dawn, dusk, dark - lighted, dark - not lighted, dark - unknown lighting, other; empty if unknown |
 | `hit_and_run` | 0/1 | **Crash-level flag:** 1 if any vehicle in the crash was coded hit-and-run (FARS HIT_RUN 1–5). NHTSA's own convention for crash factors |
 | `drunk_driver_involved` | 0/1 | Crash-level flag: any vehicle whose driver was coded as drinking (DR_DRINK = 1) |
 | `speeding_involved` | 0/1 | Crash-level flag: any vehicle coded speeding-related (SPEEDREL 1–5) |
 | `vehicle_count` | int | Motor vehicles in the crash |
 | `striking_vehicle` | text | Coarse body class of the striking vehicle: car, suv, van, pickup/light truck, bus, large truck, motorcycle. Uses the FARS striking-vehicle link where present, else the vehicle in single-vehicle crashes; empty when the striking vehicle can't be attributed (multi-vehicle crashes without a link) |
+| `striking_vehicle_model_year` | int | Model year of the striking vehicle |
+| `striking_vehicle_speed_mph` | int | Reported travel speed of the striking vehicle, mph. Reported for ~43% of rows; values ≥97 (FARS special codes) are blanked |
+| `posted_speed_limit_mph` | int | Posted speed limit where the striking vehicle was traveling |
+| `driver_age` | int | Age of the striking vehicle's driver |
+| `driver_sex` | text | `M` / `F` for the striking vehicle's driver |
+| `driver_license_status` | text | License status of the striking driver at the crash: valid, suspended, revoked, expired, cancelled or denied, learner permit, not licensed |
+| `driver_prior_crashes` | int | Striking driver's recorded crashes in the previous 3–5 years (FARS PREV_ACC, from state driver records) |
+| `driver_prior_dwi` | int | Striking driver's prior DWI convictions (PREV_DWI, same window) |
+| `driver_prior_speeding` | int | Striking driver's prior speeding convictions (PREV_SPD, same window) |
 | `year` | int | Crash year (= FARS file year) |
+
+All `driver_*` and `striking_vehicle_*` columns describe **the striking
+vehicle and its driver**, resolved the same way as `striking_vehicle`; they
+are empty when the striking vehicle can't be attributed (~9% of rows).
 
 ## Caveats
 

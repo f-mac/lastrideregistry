@@ -29,11 +29,29 @@ are anonymous and are not covered by it.
   repository's git history.
 - Verified immediate family may request removal of a name; the case remains
   as an anonymized entry so counts stay honest.
-- Contact: open an issue on the repository, or the correction email on the
-  site.
+- Contact: open an issue on the repository (linked from every page footer).
 
 ## Sourcing bar
 
 At least one reputable outlet (local newspaper, TV station, wire service) per
 fact; two independent sources preferred per case. Social media posts,
 fundraiser pages, and forums are never sole sources for contested facts.
+
+## Voice
+
+Applies to all site copy, not just case pages. Write like a careful local
+reporter, not a landing page.
+
+- Plain declarative sentences. Numbers carry the weight; adjectives don't.
+- No personification or poetic inversion ("roads hold these lights",
+  "the map remembers"). Objects don't act; people and agencies do.
+- No mirrored-antithesis tics ("what is known — and what is not yet known").
+- No self-congratulation ("That's the point.", "You are looking at it.").
+- No invented specificity: details appear only when they're in the record.
+- Claims about what is or isn't tracked must be precise and sourced. Correct:
+  "no national database records driver outcomes." Wrong: "no agency in
+  America tracks the drivers" (some DAs and advocacy groups do, locally).
+- Accountability language is civic, never retributive: ask public bodies
+  questions, bring data to meetings — never "hold someone accountable."
+- Children are named as what they are. Never frame a statistic in a way that
+  minimizes child deaths.
