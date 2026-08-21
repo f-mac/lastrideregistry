@@ -41,6 +41,31 @@ async function init() {
   pts.forEach((p, i) => (p.t = i / denom));
 
   const first = pts[0]; // 2010-01-02, Worcester County MD
+
+  // scene one: a winding route that ends where the ride ended. Stylized —
+  // FARS records only the crash point, so the path is a drawing, not a claim.
+  const route = (() => {
+    const LEN = 34, STEPS = 56, step = LEN / STEPS;
+    const base = Math.atan2(first.ay, first.ax);
+    const rp = [{ x: first.x, y: first.y }];
+    let x = first.x, y = first.y;
+    for (let i = 1; i <= STEPS; i++) {
+      const t = i / STEPS;
+      // walk backward from the death point with a gently wandering heading
+      const h = base + Math.PI + 0.55 * Math.sin(t * 5.1 + 1.3) + 0.35 * Math.sin(t * 11.7 + 4.2);
+      x += Math.cos(h) * step;
+      y += Math.sin(h) * step;
+      rp.push({ x, y });
+    }
+    rp.reverse(); // rp[0] = start of the ride, last = where it ended
+    let acc = 0;
+    rp[0].d = 0;
+    for (let i = 1; i < rp.length; i++) {
+      acc += Math.hypot(rp[i].x - rp[i - 1].x, rp[i].y - rp[i - 1].y);
+      rp[i].d = acc;
+    }
+    return { pts: rp, len: acc };
+  })();
   const yearStarts = {};
   pts.forEach((p) => { if (!(p.year in yearStarts)) yearStarts[p.year] = p.t; });
 
@@ -141,9 +166,12 @@ async function init() {
     // where the first point sits at national zoom (z=1)
     const natX = fit.tx + first.x * fit.s;
     const natY = fit.ty + first.y * fit.s;
-    // its screen position now: start centered slightly above the card
-    const pX = vw / 2 + (natX - vw / 2) * zoomOut;
-    const pY = vh * 0.42 + (natY - vh * 0.42) * zoomOut;
+    // its screen position now: clear of the card — right of it on desktop
+    // (card is centered), above the bottom-sheet card on mobile
+    const anchorX = vw < 640 ? vw / 2 : vw * 0.76;
+    const anchorY = vw < 640 ? vh * 0.3 : vh * 0.42;
+    const pX = anchorX + (natX - anchorX) * zoomOut;
+    const pY = anchorY + (natY - anchorY) * zoomOut;
     const cx = first.x - (pX - vw / 2) / (fit.s * z);
     const cy = first.y - (pY - vh / 2) / (fit.s * z);
 
@@ -219,19 +247,37 @@ async function init() {
     // ---- scene one: the first ride --------------------------------------
     const oneP = reduced ? 1 : smooth(ease(M.one * 0.12, M.one * 0.8, p));
     if (oneP > 0 && p < M.replayIn) {
-      const total = 26;
-      const drawn = total * Math.min(oneP / 0.8, 1);
-      const sx = first.x - first.ax * total;
-      const sy = first.y - first.ay * total;
+      const drawn = route.len * Math.min(oneP / 0.8, 1);
+      const rp = route.pts;
       ctx.strokeStyle = AMBER;
       ctx.lineWidth = 2.2 * px;
       ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
       ctx.shadowColor = AMBER;
       ctx.shadowBlur = 12;
       ctx.beginPath();
-      ctx.moveTo(sx, sy);
-      ctx.lineTo(sx + first.ax * drawn, sy + first.ay * drawn);
+      ctx.moveTo(rp[0].x, rp[0].y);
+      let tipX = rp[0].x, tipY = rp[0].y;
+      for (let i = 1; i < rp.length && rp[i - 1].d < drawn; i++) {
+        if (rp[i].d <= drawn) {
+          ctx.lineTo(rp[i].x, rp[i].y);
+          tipX = rp[i].x; tipY = rp[i].y;
+        } else {
+          // partial last segment so the tip moves smoothly
+          const f = (drawn - rp[i - 1].d) / (rp[i].d - rp[i - 1].d);
+          tipX = rp[i - 1].x + (rp[i].x - rp[i - 1].x) * f;
+          tipY = rp[i - 1].y + (rp[i].y - rp[i - 1].y) * f;
+          ctx.lineTo(tipX, tipY);
+        }
+      }
       ctx.stroke();
+      // the rider: a bright tip while the route is still being drawn
+      if (oneP < 0.8) {
+        ctx.fillStyle = AMBER;
+        ctx.beginPath();
+        ctx.arc(tipX, tipY, 2.2 * px, 0, Math.PI * 2);
+        ctx.fill();
+      }
       ctx.shadowBlur = 0;
       if (oneP > 0.82) {
         // the line goes out; a soft bone point remains
